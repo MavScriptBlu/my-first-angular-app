@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "my-first-angular-app/**"
+      - "src/**"
       - ".github/workflows/**"
   workflow_dispatch:
 
@@ -21,11 +21,6 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
-# ── Defaults: set working directory for all run steps ──────────────────
-defaults:
-  run:
-    working-directory: my-first-angular-app
-
 # ── Jobs ────────────────────────────────────────────────────────────────
 jobs:
   build:
@@ -39,7 +34,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: my-first-angular-app/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -50,7 +45,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: my-first-angular-app/dist/my-first-angular-app/browser
+          path: dist/my-first-angular-app/browser
 
   deploy:
     needs: build
